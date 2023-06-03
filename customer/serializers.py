@@ -1,22 +1,21 @@
-from rest_framework import serializer
-from rest_framework import *
+from rest_framework import serializers
+from customer.models import *
 
-class GetCustomerSerializer(serializers.ModelSerializer):
+class GetCustomerserializer(serializers.ModelSerializer):
 
     class Meta:
-    model = Customer
-    fields ="__all__"
+        model = Customers
+        fields = "__all__"
 
+class GetAddressSerializer(serializers.ModelSerializer):
 
-    class CustomerAddressSerializer(serializer.ModelSerializer):
     class Meta:
-    models = CustomerAddress
-    fields = "__all__"
+        model = CustomerAddress
+        fields = "__all__"
 
+class GetCustomerDetailsAddressSerializer(serializers.ModelSerializer):
+    customer_address = GetAddressSerializer(many = True)
 
-    class CustomerDetailAddressSerializer(serializer.ModelSerializer)
-    Customer_addresses
     class Meta:
-    models = Customer
-    fields ='first_name' 'last_name'
-   
+        model = Customers
+        fields = ('first_name','last_name','mobile','address','age','country','city')

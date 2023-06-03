@@ -1,34 +1,38 @@
 from django.shortcuts import render
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from customer.models import *
 from customer.serializers import *
 
 # Create your views here.
-class GetCustomerView(APIview):
+
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class GetCustomerView(APIView):
 
     def get(self,request):
-        instance = Customer,object.all()
-        serializer =GetcustomerSerializer(instance,many=True)
+        instance = Customers.objects.all()
+        serializer = GetCustomerserializer(instance,many=True)
         return Response(serializer.data)
-        
+
     def post(self,request):
         params = request.data
         print("Data",params)
-        serializers =GetcustomerSerializer(data = params)
-        serializers.valid(FalseException=True )
-        serializers.save()
-        return Response({"message","Save Successfully"}) 
+        serializer = GetCustomerserializer(data=params)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response("Successfully sent")
 
-class CustomerAddressViews(APIView):
+class GetAddressView(APIView):
 
-  def get(self,request):
-       instance=customer.object.all()
-       serializer=  CustomerAddressSerializer(instance,many=True)            
-       return Response(serializer.data)         
+    def get(self,request):
+        instance = CustomerAddress.objects.all()
+        serializers = GetAddressSerializer(instance,many= True)
+        return Response(serializers.data)
 
-      class CustomerDetailAddressView(APIView):
-        def get(self,request,pk):
-            instance =customer.object.filter(id=pk)     
-            serializer = CustomerDetailAddressSerializer(instance,many = True)                                                                                                
+class GetCustomerDetailsAddressView(APIView):
+
+    def get(self,request,pk):
+        instance = Customers.objects.filter(id = pk)
+        serializers = GetCustomerDetailsAddressSerializer(instance,many = True)
+        return Response(serializers.data)
